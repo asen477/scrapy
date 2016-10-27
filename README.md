@@ -28,7 +28,10 @@ Scrapy主要包括了以下组件：
 使用Scrapy可以很方便的完成网上数据的采集工作，它为我们完成了大量的工作，而不需要自己费大力气去开发。
 
 官方网站：http://scrapy.org/
+
 开源地址：https://github.com/scrapy/scrapy
+
 本代码地址:https://github.com/asen477/scrapy
+
 
 # 抓取切勿干非法之事，开源仅供参考。

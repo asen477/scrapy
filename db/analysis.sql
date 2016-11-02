@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
 -- version 4.5.5.1
 -- http://www.phpmyadmin.net
--- Author:Trunks
+--
 -- Host: 127.0.0.1
--- Generation Time: 2016-10-27 05:20:58
+-- Generation Time: 2016-11-02 15:52:01
 -- 服务器版本： 5.7.11
 -- PHP Version: 5.6.19
 
@@ -17,10 +17,10 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `analysislts`
+-- Database: `analysis`
 --
-CREATE DATABASE IF NOT EXISTS `analysislts` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `analysislts`;
+CREATE DATABASE IF NOT EXISTS `analysis` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `analysis`;
 
 -- --------------------------------------------------------
 
@@ -32,8 +32,9 @@ DROP TABLE IF EXISTS `spider_autohome_brand`;
 CREATE TABLE `spider_autohome_brand` (
   `id` int(11) NOT NULL,
   `name` text,
-  `src` text,
-  `datetime` timestamp NULL DEFAULT NULL
+  `title` text,
+  `datetime` timestamp NULL DEFAULT NULL,
+  `sort` int(11) NOT NULL DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -48,8 +49,9 @@ CREATE TABLE `spider_autohome_firms` (
   `bid` int(11) DEFAULT NULL,
   `name` text,
   `type` varchar(100) DEFAULT NULL,
-  `src` text,
-  `datetime` timestamp NULL DEFAULT NULL
+  `title` text,
+  `datetime` timestamp NULL DEFAULT NULL,
+  `sort` int(11) DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -63,8 +65,9 @@ CREATE TABLE `spider_autohome_vehicles` (
   `id` int(11) NOT NULL,
   `fid` int(11) DEFAULT NULL,
   `name` text,
-  `src` text,
-  `datetime` timestamp NULL DEFAULT NULL
+  `title` text,
+  `datetime` timestamp NULL DEFAULT NULL,
+  `sort` int(11) DEFAULT '0'
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -82,7 +85,8 @@ CREATE TABLE `spider_car_data` (
   `price3` varchar(100) DEFAULT NULL,
   `describes` text,
   `content` text,
-  `datetime` timestamp NULL DEFAULT NULL
+  `datetime` timestamp NULL DEFAULT NULL,
+  `type` int(5) NOT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -129,14 +133,12 @@ ALTER TABLE `spider_autohome_vehicles`
 ALTER TABLE `spider_car_data`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `id` (`id`);
-ALTER TABLE `spider_car_data` ADD FULLTEXT KEY `name` (`name`);
 
 --
 -- Indexes for table `spider_lianjia_data`
 --
 ALTER TABLE `spider_lianjia_data`
   ADD PRIMARY KEY (`id`);
-ALTER TABLE `spider_lianjia_data` ADD FULLTEXT KEY `name` (`name`);
 
 --
 -- 在导出的表使用AUTO_INCREMENT

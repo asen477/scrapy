@@ -19,9 +19,9 @@ class Auto3Spider(CrawlSpider):
     }
     name = "auto3"
     allowed_domains = ["autohome.com.cn"]
-    conn = MySQLdb.connect(host="localhost", user="root", passwd="root", db="analysislts", charset="utf8")
+    conn = MySQLdb.connect(host="localhost", user="root", passwd="root", db="analysis", charset="utf8")
     cursor = conn.cursor()
-    sql = "select src from spider_autohome_firms "
+    sql = "select title from spider_autohome_firms "
     count = cursor.execute(sql)
     results = cursor.fetchall()
     arr_list = []

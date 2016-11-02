@@ -74,11 +74,13 @@ ITEM_PIPELINES = {
    'trunks.pipelines.JsonWriterAtuoPipeline':334,
    'trunks.pipelines.JsonWriterAuto2Pipeline':335,
    'trunks.pipelines.JsonWriterAuto3Pipeline':336,
+   'trunks.pipelines.JsonWriterrenrenchePipeline': 337,
    'trunks.pipelines.MysqldbPipeline':200,
    'trunks.pipelines.MysqldblianjiaPipeline': 500,
    'trunks.pipelines.MysqldbautoPipeline': 501,
    'trunks.pipelines.MysqldbautofirmsPipeline': 502,
    'trunks.pipelines.MysqldbautovehiclesPipeline': 503,
+   'trunks.pipelines.MysqldbrenrenchePipeline': 504,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

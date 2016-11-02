@@ -38,6 +38,11 @@ class Auto3Item(scrapy.Item):
     t2 = scrapy.Field()
     t3 = scrapy.Field()
 
+class RenrencheItem(scrapy.Item):
+    t1 = scrapy.Field()
+    t2 = scrapy.Field()
+    t3 = scrapy.Field()
+
 class PageItem(scrapy.Item):
     rank = scrapy.Field()
     title = scrapy.Field()

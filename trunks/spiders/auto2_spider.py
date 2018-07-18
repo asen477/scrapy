@@ -26,12 +26,12 @@ class Auto2Spider(CrawlSpider):
     results = cursor.fetchall()
     arr_list = []
     for row in results:
-        arr_list += ['http://mall.autohome.com.cn' + row[0]]
+        arr_list += ['http:' + row[0]]
     cursor.close()
     conn.commit()
     conn.close()
     start_urls = arr_list
-    print "::::::::::",start_urls,"::::::::::::::::"
+    # print("::::::::::",start_urls,"::::::::::::::::")
     def parse(self, response):
         for sel in response.xpath('//li[@class="tab-content-item current"]'):
             item = Auto2Item()

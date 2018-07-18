@@ -32,7 +32,7 @@ class JsonWriterHousePipeline(object):
     def process_item(self, item, spider):
         rep_item = item
         line = json.dumps(dict(rep_item)).replace('\n', '')
-        self.file.write(line.replace(' ', '') + "\n")
+        # self.file.write(line.replace(' ', '') + "\n")
         return item
 
 class JsonWriterAtuoPipeline(object):
@@ -42,7 +42,7 @@ class JsonWriterAtuoPipeline(object):
     def process_item(self, item, spider):
         rep_item = item
         line = json.dumps(dict(rep_item)).replace('\n', '')
-        self.file.write(line.replace(' ', '') + "\n")
+        # self.file.write(line.replace(' ', '') + "\n")
         return item
 
 class JsonWriterAuto2Pipeline(object):
@@ -52,7 +52,7 @@ class JsonWriterAuto2Pipeline(object):
     def process_item(self, item, spider):
         rep_item = item
         line = json.dumps(dict(rep_item)).replace('\n', '')
-        self.file.write(line.replace(' ', '') + "\n")
+        #self.file.write(line.replace(' ', '') + "\n")
         return item
 
 class JsonWriterAuto3Pipeline(object):
@@ -120,13 +120,19 @@ class MysqldblianjiaPipeline(object):
 
     def process_item(self, item, spider):
         now = datetime.now().replace(microsecond=0).isoformat(' ')
-        name = item['gms_title']
-        price1 = item['gms_price'][0]
-        price2 = item['gms_price'][1]
+        name = item['gms_title'][0].replace('\n', '').replace(' ', '')
+        address = item['gms_title'][1].replace('\n', '').replace(' ', '')
+        price1 = item['gms_info'][0]
+        city = item['gms_city']
+        for item in item['gms_price']:
+            if item != "\n":
+                price2 = item
+            else:
+                price2 = 0
         self.cursor.execute("""
-        		insert IGNORE into spider_lianjia_data(name,price1,price2,datetime)
-        		values(%s, %s, %s, %s)
-        	    """, (name,price1,price2,now))
+        		insert IGNORE into spider_lianjia_data(name,address,city,price1,price2,datetime)
+        		values(%s, %s, %s, %s, %s, %s)
+        	    """, (name,address,city, price1,price2,now))
         self.conn.commit()
         return item
 
@@ -173,7 +179,8 @@ class MysqldbautofirmsPipeline(object):
         i = 0
     #    print "gaoming:::::::::::"
      #   print "bid::::::::::::::"
-        filter = unicode("进入旗舰店", "UTF-8")
+     #    filter = unicode("进入旗舰店", "UTF-8")
+        filter = "进入旗舰店"
         while i < str_count:
             name = item['t2'][i]
             type = item['t1']
@@ -208,7 +215,7 @@ class MysqldbautovehiclesPipeline(object):
         now = datetime.now().replace(microsecond=0).isoformat(' ')
         str_count = len(item['t2'])
         i = 0
-        print "::::::::::::::Trunks::::::::::: VERSION 1.3.1"
+        print("::::::::::::::Trunks::::::::::: VERSION 1.3.1")
         #filter = unicode("进入旗舰店", "UTF-8")
         while i < str_count:
             name = item['t2'][i]

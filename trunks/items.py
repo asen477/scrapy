@@ -22,6 +22,7 @@ class LianjiaItem(scrapy.Item):
     gms_title = scrapy.Field()
     gms_info = scrapy.Field()
     gms_price = scrapy.Field()
+    gms_city = scrapy.Field()
 
 class AutoItem(scrapy.Item):
     t1 = scrapy.Field()

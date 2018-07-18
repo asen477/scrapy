@@ -18,79 +18,37 @@ class LianjiaSpider(CrawlSpider):
     }
     name = "lianjia"
     allowed_domains = ["lianjia.com"]
-    start_urls = [
-        "http://sy.fang.lianjia.com/loupan/",
-        "http://sy.fang.lianjia.com/loupan/pg2/",
-        "http://sy.fang.lianjia.com/loupan/pg3/",
-        "http://sy.fang.lianjia.com/loupan/pg4/",
-        "http://sy.fang.lianjia.com/loupan/pg5/",
-        "http://sy.fang.lianjia.com/loupan/pg6/",
-        "http://sy.fang.lianjia.com/loupan/pg7/",
-        "http://sy.fang.lianjia.com/loupan/pg8/",
-        "http://sy.fang.lianjia.com/loupan/pg9/",
-        "http://sy.fang.lianjia.com/loupan/pg10/",
-        "http://sy.fang.lianjia.com/loupan/pg11/",
-        "http://sy.fang.lianjia.com/loupan/pg12/",
-        "http://sy.fang.lianjia.com/loupan/pg13/",
-        "http://sy.fang.lianjia.com/loupan/pg14/",
-        "http://sy.fang.lianjia.com/loupan/pg15/",
-        "http://sy.fang.lianjia.com/loupan/pg16/",
-        "http://sy.fang.lianjia.com/loupan/pg17/",
-        "http://sy.fang.lianjia.com/loupan/pg18/",
-        "http://sy.fang.lianjia.com/loupan/pg19/",
-        "http://sy.fang.lianjia.com/loupan/pg20/",
-        "http://sy.fang.lianjia.com/loupan/pg21/",
-        "http://sy.fang.lianjia.com/loupan/pg22/",
-        "http://sy.fang.lianjia.com/loupan/pg23/",
-        "http://sy.fang.lianjia.com/loupan/pg24/",
-        "http://sy.fang.lianjia.com/loupan/pg25/",
-        "http://sy.fang.lianjia.com/loupan/pg26/",
-        "http://sy.fang.lianjia.com/loupan/pg27/",
-        "http://sy.fang.lianjia.com/loupan/pg28/",
-        "http://sy.fang.lianjia.com/loupan/pg29/",
-        "http://sy.fang.lianjia.com/loupan/pg30/",
-        "http://sy.fang.lianjia.com/loupan/pg31/",
-        "http://sy.fang.lianjia.com/loupan/pg32/",
-        "http://sy.fang.lianjia.com/loupan/pg33/",
-        "http://sy.fang.lianjia.com/loupan/pg34/",
-        "http://sy.fang.lianjia.com/loupan/pg35/",
-        "http://sy.fang.lianjia.com/loupan/pg36/",
-        "http://sy.fang.lianjia.com/loupan/pg37/",
-        "http://sy.fang.lianjia.com/loupan/pg38/",
-        "http://sy.fang.lianjia.com/loupan/pg39/",
-        "http://sy.fang.lianjia.com/loupan/pg40/",
-        "http://sy.fang.lianjia.com/loupan/pg41/",
-        "http://sy.fang.lianjia.com/loupan/pg42/",
-        "http://sy.fang.lianjia.com/loupan/pg43/",
-        "http://sy.fang.lianjia.com/loupan/pg44/",
-        "http://sy.fang.lianjia.com/loupan/pg45/",
-        "http://sy.fang.lianjia.com/loupan/pg46/",
-        "http://sy.fang.lianjia.com/loupan/pg47/",
-        "http://sy.fang.lianjia.com/loupan/pg48/",
-        "http://sy.fang.lianjia.com/loupan/pg49/",
-        "http://sy.fang.lianjia.com/loupan/pg50/",
-        "http://sy.fang.lianjia.com/loupan/pg51/",
-        "http://sy.fang.lianjia.com/loupan/pg52/",
-        "http://sy.fang.lianjia.com/loupan/pg53/",
-        "http://sy.fang.lianjia.com/loupan/pg54/",
-        "http://sy.fang.lianjia.com/loupan/pg55/",
-        "http://sy.fang.lianjia.com/loupan/pg56/",
-        "http://sy.fang.lianjia.com/loupan/pg57/",
-        "http://sy.fang.lianjia.com/loupan/pg58/",
-         ]
+    # 城市分站
+    list_city = ['sy','sh','bj','cd','cq','gz','cs','hz','jn','qd','nj','sz','ty','wh','su']
+    arr_list = []
+    for item in list_city:
+        arr_list += ['https://' + item + '.fang.lianjia.com/loupan/']
+        # 计算分页数量
+        i, j = 1, 60
+        while i < j:
+            arr_list += ['https://' + item + '.fang.lianjia.com/loupan/'+str(i)]
+            i += 1
+
+    start_urls = arr_list
 
     # 数据抓去部分
     def parse(self, response):
-        for sel in response.xpath('//div[@class="info-panel"]'):
+        for sel in response.xpath('//div[@class="resblock-desc-wrapper"]'):
             item = LianjiaItem()
             # 楼盘名
-            gms_scrapy_1 = sel.xpath('div/h2/a/text()').extract()
+            gms_scrapy_1 = sel.xpath('div/a/text()').extract()
             # 楼盘信息
-            gms_scrapy_2 = sel.xpath('div[@class="col-1"]/div/span/text()').extract()
+            # gms_scrapy_2 = sel.xpath('div[@class="col-1"]/div/span/text()').extract()
+            gms_scrapy_2 = sel.xpath('div[@class="resblock-price"]/div/span/text()').extract()
             # 楼盘价格
-            gms_scrapy_3 = sel.xpath('div/div/div/span/text()').extract()
+            gms_scrapy_3 = sel.xpath('div[@class="resblock-price"]/div/text()').extract()
+            # 城市区域
+            gms_scrapy_4 = sel.xpath('title/text()').extract()
+
             item['gms_title'] = gms_scrapy_1
             item['gms_info'] = gms_scrapy_2
             item['gms_price'] = gms_scrapy_3
+            item['gms_city'] = response.url
+            print(item)
             yield item
 

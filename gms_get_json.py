@@ -7,4 +7,4 @@ with open('./auto3.json') as f:
         data.append(json.loads(line))
 
 
-print json.dumps(data , ensure_ascii=False)
+print(json.dumps(data , ensure_ascii=False))
